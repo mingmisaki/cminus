@@ -44,7 +44,7 @@ TreeNode * stmt_sequence(void)
 { TreeNode * t = statement();
   TreeNode * p = t;
   while ((token!=ENDFILE) && (token!=END) &&
-         (token!=ELSE) && (token!=UNTIL))
+         (token!=ELSE) )
   { TreeNode * q;
     match(SEMI);
     q = statement();
@@ -63,10 +63,7 @@ TreeNode * statement(void)
 { TreeNode * t = NULL;
   switch (token) {
     case IF : t = if_stmt(); break;
-    case REPEAT : t = repeat_stmt(); break;
     case ID : t = assign_stmt(); break;
-    case READ : t = read_stmt(); break;
-    case WRITE : t = write_stmt(); break;
     default : syntaxError("unexpected token -> ");
               printToken(token,tokenString);
               token = getToken();
@@ -79,7 +76,7 @@ TreeNode * if_stmt(void)
 { TreeNode * t = newStmtNode(IfK);
   match(IF);
   if (t!=NULL) t->child[0] = exp();
-  match(THEN);
+  //match(THEN);
   if (t!=NULL) t->child[1] = stmt_sequence();
   if (token==ELSE) {
     match(ELSE);
@@ -91,10 +88,10 @@ TreeNode * if_stmt(void)
 
 TreeNode * repeat_stmt(void)
 { TreeNode * t = newStmtNode(RepeatK);
-  match(REPEAT);
-  if (t!=NULL) t->child[0] = stmt_sequence();
-  match(UNTIL);
-  if (t!=NULL) t->child[1] = exp();
+//  match(REPEAT);
+//  if (t!=NULL) t->child[0] = stmt_sequence();
+//  match(UNTIL);
+//  if (t!=NULL) t->child[1] = exp();
   return t;
 }
 
@@ -110,7 +107,7 @@ TreeNode * assign_stmt(void)
 
 TreeNode * read_stmt(void)
 { TreeNode * t = newStmtNode(ReadK);
-  match(READ);
+  //match(READ);
   if ((t!=NULL) && (token==ID))
     t->attr.name = copyString(tokenString);
   match(ID);
@@ -119,7 +116,7 @@ TreeNode * read_stmt(void)
 
 TreeNode * write_stmt(void)
 { TreeNode * t = newStmtNode(WriteK);
-  match(WRITE);
+  //match(WRITE);
   if (t!=NULL) t->child[0] = exp();
   return t;
 }

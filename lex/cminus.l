@@ -13,11 +13,10 @@
 char tokenString[MAXTOKENLEN+1];
 %}
 
-ID          letter letter*
-NUM         digit digit*
 letter      [a-zA-Z]
 digit       [0-9]
-
+identifier  letter letter*
+number      digit digit*
 newline     \n
 whitespace  [ \t]+
 
@@ -26,15 +25,13 @@ whitespace  [ \t]+
 "if"            {return IF;}
 "else"          {return ELSE;}
 "while"        {return WHILE;}
-"until"         {return UNTIL;}
 "="            {return ASSIGN;}
-"="             {return EQ;}
+"=="             {return EQ;}
+"!="             {return NEQ;}
 "<"             {return LT;}
 "<="             {return LTE;}
 ">"             {return GT;}
 ">="             {return GTE;}
-"=="             {return EQ;}
-"!="             {return NEQ;}
 "+"             {return PLUS;}
 "-"             {return MINUS;}
 "*"             {return TIMES;}
@@ -56,6 +53,7 @@ whitespace  [ \t]+
                     if (c == '\n') lineno++;
                   } while (c != '}');
                 }
+
 .               {return ERROR;}
 
 %%

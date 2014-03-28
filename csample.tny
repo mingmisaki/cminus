@@ -1,0 +1,11 @@
+{
+	Sample program
+  in TINY language -
+  computes factorial
+}
+if 0 < x { don't compute if x <= 0 }
+  fact = 1;
+  while  
+	fact = fact * x;
+    x = x - 1;
+end
