@@ -8,6 +8,7 @@
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
+TokenType getToken(void);
 /* Procedure printToken prints a token 
  * and its lexeme to the listing file
  */

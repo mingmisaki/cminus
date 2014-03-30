@@ -15,8 +15,8 @@ char tokenString[MAXTOKENLEN+1];
 
 letter      [a-zA-Z]
 digit       [0-9]
-identifier  letter letter*
-number      digit digit*
+identifier  {letter}+
+number      {digit}+
 newline     \n
 whitespace  [ \t]+
 
@@ -61,6 +61,7 @@ whitespace  [ \t]+
 TokenType getToken(void)
 { static int firstTime = TRUE;
   TokenType currentToken;
+  printf("Debug !!!\n");
   if (firstTime)
   { firstTime = FALSE;
     lineno++;
