@@ -69,7 +69,10 @@ main( int argc, char * argv[] )
     exit(1);
   }
   listing = stdout; /* send listing to screen */
-  fprintf(listing,"\nTINY COMPILATION: %s\n",pgm);
+  //fprintf(listing,"\nTINY COMPILATION: %s\n",pgm);
+  fprintf(listing,"\n");
+  fprintf(listing,"  line number         token        lexeme\n");
+  fprintf(listing,"-------------------------------------------\n");
 #if NO_PARSE
   while (getToken()!=ENDFILE);
 #else

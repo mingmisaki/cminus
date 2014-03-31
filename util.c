@@ -14,38 +14,40 @@
  */
 void printToken( TokenType token, const char* tokenString )
 { switch (token)
-  { case IF:
-    case ELSE:
-    case WHILE:
-    case ASSIGN: fprintf(listing,"=\n"); break;
-    case EQ: fprintf(listing,"==\n"); break;
-    case NEQ: fprintf(listing,"!=\n"); break;
-    case LT: fprintf(listing,"<\n"); break;
-    case LTE: fprintf(listing,"<=\n"); break;
-    case GT: fprintf(listing,">\n"); break;
-    case GTE: fprintf(listing,">=\n"); break;
-    case PLUS: fprintf(listing,"+\n"); break;
-    case MINUS: fprintf(listing,"-\n"); break;
-    case TIMES: fprintf(listing,"*\n"); break;
-    case OVER: fprintf(listing,"/\n"); break;
-    case LPAREN: fprintf(listing,"(\n"); break;
-    case RPAREN: fprintf(listing,")\n"); break;
-    case LBRACK: fprintf(listing,"[\n"); break;
-    case RBRACK: fprintf(listing,"]\n"); break;
-    case SEMI: fprintf(listing,";\n"); break;
-    case COMMA: fprintf(listing,",\n"); break;
-    case ENDFILE: fprintf(listing,"EOF\n"); break;
+  { case IF: fprintf(listing, "IF           if\n"); break;
+    case ELSE:fprintf(listing, "ELSE         else\n"); break;
+    case WHILE:fprintf(listing, "WHILE        while\n"); break;
+    case ASSIGN: fprintf(listing,"ASSIGN       =\n"); break;
+    case EQ: fprintf(listing,"EQ           ==\n"); break;
+    case NEQ: fprintf(listing,"NEQ          !=\n"); break;
+    case LT: fprintf(listing,"LT           <\n"); break;
+    case LTE: fprintf(listing,"LTE          <=\n"); break;
+    case GT: fprintf(listing,"GT           >\n"); break;
+    case GTE: fprintf(listing,"GTE          >=\n"); break;
+    case PLUS: fprintf(listing,"PLUS         +\n"); break;
+    case MINUS: fprintf(listing,"MINUX        -\n"); break;
+    case TIMES: fprintf(listing,"TIMES        *\n"); break;
+    case OVER: fprintf(listing,"OVER         /\n"); break;
+    case LPAREN: fprintf(listing,"LPAREN       (\n"); break;
+    case RPAREN: fprintf(listing,"RPAREN       )\n"); break;
+    case LBRACK: fprintf(listing,"LBRACK       [\n"); break;
+    case RBRACK: fprintf(listing,"RBLACK       ]\n"); break;
+    case LBRACE: fprintf(listing,"LBRACE       {\n"); break;
+    case RBRACE: fprintf(listing,"RBRACE       }\n"); break;
+    case SEMI: fprintf(listing,"SEMI         ;\n"); break;
+    case COMMA: fprintf(listing,"COMMA        ,\n"); break;
+    case ENDFILE: fprintf(listing,"ENDFILE      EOF\n"); break;
     case NUM:
       fprintf(listing,
-          "NUM, val= %s\n",tokenString);
+          "NUM          %s\n",tokenString);
       break;
     case ID:
       fprintf(listing,
-          "ID, name= %s\n",tokenString);
+          "ID           %s\n",tokenString);
       break;
     case ERROR:
       fprintf(listing,
-          "ERROR: %s\n",tokenString);
+          "ERROR          \n",tokenString);
       break;
     default: /* should never happen */
       fprintf(listing,"Unknown token: %d\n",token);
@@ -61,7 +63,7 @@ TreeNode * newStmtNode(StmtKind kind)
   if (t==NULL)
     fprintf(listing,"Out of memory error at line %d\n",lineno);
   else {
-    for (i=0;i<MAXCHILDREN;i++) t->child[i] = NULL;
+
     t->sibling = NULL;
     t->nodekind = StmtK;
     t->kind.stmt = kind;

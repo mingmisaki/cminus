@@ -1,0 +1,13 @@
+20091594 : main.o util.o lex.yy.o
+	gcc -o 20091594 main.o util.o lex.yy.o -lfl
+main.o : main.c
+	gcc -c main.c
+util.o : util.c
+	gcc -c util.c
+lex.yy.o : lex.yy.c 
+	gcc -c lex.yy.c
+lex.yy.c : tiny.l
+	flex tiny.l 
+
+clean : main.o util.o lex.yy.o
+	rm main.o util.o lex.yy.o

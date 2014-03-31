@@ -1,0 +1,14 @@
+/* This is power function
+varialbe: baseNumber, squreNumber, resultNumber
+
+ */
+
+int i = 0;
+int resultNumber = 1;
+while(i < squreNumber)
+{
+	resultNumber = resultNumber * baseNumber;
+	i++;
+}
+
+return resultNumber;
