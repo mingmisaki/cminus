@@ -1,4 +1,4 @@
-/****************************************************/
+/***************************************************/
 /* File: c.l                                     */
 /* Lex specification for c- language*/
 /* Compiler Construction: Principles and Practice   */
@@ -6,11 +6,12 @@
 /****************************************************/
 
 %{
-#include "globals.h"
+#include "./yacc/globals.h"
 #include "util.h"
-#include "scan.h"
+//#include "scan.h"
+#include "y.tab.h"
 /* lexeme of identifier or reserved word */
-char tokenString[MAXTOKENLEN+1];
+//char tokenString[MAXTOKENLEN+1];
 %}
 
 letter      [a-zA-Z]
@@ -26,6 +27,9 @@ whitespace  [ \t]+
 "if"            {return IF;}
 "else"          {return ELSE;}
 "while"        {return WHILE;}
+"int"			{return INT;}
+"return"		{return RETURN;}
+"void"			{return VOID;}
 "="            {return ASSIGN;}
 "=="             {return EQ;}
 "!="             {return NEQ;}
@@ -57,6 +61,8 @@ int yywrap(void)
 {
 	return 1;
 }
+//yylval  = strdup(yytext);
+
 TokenType getToken(void)
 { static int firstTime = TRUE;
   TokenType currentToken;
@@ -67,11 +73,11 @@ TokenType getToken(void)
     yyout = listing;
   }
   currentToken = yylex();
-  strncpy(tokenString,yytext,MAXTOKENLEN);
-  if (1) {
-    fprintf(listing,"\t%2d              ",lineno);
-    printToken(currentToken,tokenString);
-  }
+//strncpy(tokenString,yytext,MAXTOKENLEN);
+//  if (1) {
+//    fprintf(listing,"\t%2d              ",lineno);
+//    printToken(currentToken,tokenString);
+//  }
   return currentToken;
 }
 
