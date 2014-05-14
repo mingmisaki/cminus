@@ -5,17 +5,17 @@
 /* Kenneth C. Louden                                */
 /****************************************************/
 
-#include "globals.h"
+#include "./yacc/globals.h"
 
 /* set NO_PARSE to TRUE to get a scanner-only compiler */
-#define NO_PARSE TRUE 
+#define NO_PARSE FALSE 
 /* set NO_ANALYZE to TRUE to get a parser-only compiler */
-#define NO_ANALYZE FALSE
+#define NO_ANALYZE TRUE 
 
 /* set NO_CODE to TRUE to get a compiler that does not
  * generate code
  */
-#define NO_CODE FALSE
+#define NO_CODE TRUE 
 
 #include "util.h"
 #if NO_PARSE
@@ -39,7 +39,7 @@ FILE * code;
 /* allocate and set tracing flags */
 //int EchoSource = FALSE;
 int TraceScan = FALSE;
-int TraceParse = FALSE;
+int TraceParse = TRUE;
 int TraceAnalyze = FALSE;
 int TraceCode = FALSE;
 
@@ -70,11 +70,11 @@ main( int argc, char * argv[] )
   }
   listing = stdout; /* send listing to screen */
   //fprintf(listing,"\nTINY COMPILATION: %s\n",pgm);
+#if NO_PARSE
   fprintf(listing,"\n");
   fprintf(listing,"  line number         token        lexeme\n");
   fprintf(listing,"-------------------------------------------\n");
-#if NO_PARSE
-  while (getToken()!=ENDFILE);
+  //while (getToken()!=ENDFILE);
 #else
   syntaxTree = parse();
   if (TraceParse) {

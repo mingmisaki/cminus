@@ -6,53 +6,54 @@
 /* Kenneth C. Louden                                */
 /****************************************************/
 
-#include "globals.h"
+#include "./yacc/globals.h"
 #include "util.h"
+#include "y.tab.h"
 
 /* Procedure printToken prints a token 
  * and its lexeme to the listing file
  */
-void printToken( TokenType token, const char* tokenString )
-{ switch (token)
-  { case IF: fprintf(listing, "IF           if\n"); break;
-    case ELSE:fprintf(listing, "ELSE         else\n"); break;
-    case WHILE:fprintf(listing, "WHILE        while\n"); break;
-    case ASSIGN: fprintf(listing,"ASSIGN       =\n"); break;
-    case EQ: fprintf(listing,"EQ           ==\n"); break;
-    case NEQ: fprintf(listing,"NEQ          !=\n"); break;
-    case LT: fprintf(listing,"LT           <\n"); break;
-    case LTE: fprintf(listing,"LTE          <=\n"); break;
-    case GT: fprintf(listing,"GT           >\n"); break;
-    case GTE: fprintf(listing,"GTE          >=\n"); break;
-    case PLUS: fprintf(listing,"PLUS         +\n"); break;
-    case MINUS: fprintf(listing,"MINUX        -\n"); break;
-    case TIMES: fprintf(listing,"TIMES        *\n"); break;
-    case OVER: fprintf(listing,"OVER         /\n"); break;
-    case LPAREN: fprintf(listing,"LPAREN       (\n"); break;
-    case RPAREN: fprintf(listing,"RPAREN       )\n"); break;
-    case LBRACK: fprintf(listing,"LBRACK       [\n"); break;
-    case RBRACK: fprintf(listing,"RBLACK       ]\n"); break;
-    case LBRACE: fprintf(listing,"LBRACE       {\n"); break;
-    case RBRACE: fprintf(listing,"RBRACE       }\n"); break;
-    case SEMI: fprintf(listing,"SEMI         ;\n"); break;
-    case COMMA: fprintf(listing,"COMMA        ,\n"); break;
-    case ENDFILE: fprintf(listing,"ENDFILE      EOF\n"); break;
-    case NUM:
-      fprintf(listing,
-          "NUM          %s\n",tokenString);
-      break;
-    case ID:
-      fprintf(listing,
-          "ID           %s\n",tokenString);
-      break;
-    case ERROR:
-      fprintf(listing,
-          "ERROR          \n",tokenString);
-      break;
-    default: /* should never happen */
-      fprintf(listing,"Unknown token: %d\n",token);
-  }
-}
+//void printToken( TokenType token, const char* tokenString )
+//{ switch (token)
+//  { case IF: fprintf(listing, "IF           if\n"); break;
+//    case ELSE:fprintf(listing, "ELSE         else\n"); break;
+//    case WHILE:fprintf(listing, "WHILE        while\n"); break;
+//    case ASSIGN: fprintf(listing,"ASSIGN       =\n"); break;
+//    case EQ: fprintf(listing,"EQ           ==\n"); break;
+//    case NEQ: fprintf(listing,"NEQ          !=\n"); break;
+//    case LT: fprintf(listing,"LT           <\n"); break;
+//    case LTE: fprintf(listing,"LTE          <=\n"); break;
+//    case GT: fprintf(listing,"GT           >\n"); break;
+//    case GTE: fprintf(listing,"GTE          >=\n"); break;
+//    case PLUS: fprintf(listing,"PLUS         +\n"); break;
+//    case MINUS: fprintf(listing,"MINUX        -\n"); break;
+//    case TIMES: fprintf(listing,"TIMES        *\n"); break;
+//    case OVER: fprintf(listing,"OVER         /\n"); break;
+//    case LPAREN: fprintf(listing,"LPAREN       (\n"); break;
+//    case RPAREN: fprintf(listing,"RPAREN       )\n"); break;
+//    case LBRACK: fprintf(listing,"LBRACK       [\n"); break;
+//    case RBRACK: fprintf(listing,"RBLACK       ]\n"); break;
+//    case LBRACE: fprintf(listing,"LBRACE       {\n"); break;
+//    case RBRACE: fprintf(listing,"RBRACE       }\n"); break;
+//    case SEMI: fprintf(listing,"SEMI         ;\n"); break;
+//    case COMMA: fprintf(listing,"COMMA        ,\n"); break;
+//    case ENDFILE: fprintf(listing,"ENDFILE      EOF\n"); break;
+//    case NUM:
+//      fprintf(listing,
+//          "NUM          %s\n",tokenString);
+//      break;
+//    case ID:
+//      fprintf(listing,
+//          "ID           %s\n",tokenString);
+//      break;
+//    case ERROR:
+//      fprintf(listing,
+//          "ERROR          \n",tokenString);
+//      break;
+//    default: /* should never happen */
+//      fprintf(listing,"Unknown token: %d\n",token);
+//  }
+//}
 
 /* Function newStmtNode creates a new statement
  * node for syntax tree construction
@@ -135,18 +136,18 @@ void printTree( TreeNode * tree )
         case IfK:
           fprintf(listing,"If\n");
           break;
-        case RepeatK:
-          fprintf(listing,"Repeat\n");
-          break;
+//        case RepeatK:
+//          fprintf(listing,"Repeat\n");
+//          break;
         case AssignK:
           fprintf(listing,"Assign to: %s\n",tree->attr.name);
           break;
-        case ReadK:
-          fprintf(listing,"Read: %s\n",tree->attr.name);
-          break;
-        case WriteK:
-          fprintf(listing,"Write\n");
-          break;
+//        case ReadK:
+//          fprintf(listing,"Read: %s\n",tree->attr.name);
+//          break;
+//        case WriteK:
+//          fprintf(listing,"Write\n");
+//          break;
         default:
           fprintf(listing,"Unknown ExpNode kind\n");
           break;
@@ -156,7 +157,7 @@ void printTree( TreeNode * tree )
     { switch (tree->kind.exp) {
         case OpK:
           fprintf(listing,"Op: ");
-          printToken(tree->attr.op,"\0");
+//          printToken(tree->attr.op,"\0");
           break;
         case ConstK:
           fprintf(listing,"Const: %d\n",tree->attr.val);
