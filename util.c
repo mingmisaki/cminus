@@ -173,10 +173,10 @@ void printTree( TreeNode * tree )
           fprintf(listing,"While\n");
           break;
         case AssignK:
-          fprintf(listing,"Assign to: %s\n",tree->attr.name);
+          fprintf(listing,"Assign to\n");
           break;
         case CompK:
-          fprintf(listing,"Compound stmt: \n");
+          fprintf(listing,"Compound statement: \n");
           break;
         case ReturnK:
           fprintf(listing,"Return: \n");
@@ -190,7 +190,7 @@ void printTree( TreeNode * tree )
     { switch (tree->kind.exp) {
         case OpK:
           fprintf(listing,"Op: ");
-//          printToken(tree->attr.op,"\0");
+          printToken(tree->attr.op,"\0");
           break;
         case ConstK:
           fprintf(listing,"Const: %d\n",tree->attr.val);
@@ -200,12 +200,13 @@ void printTree( TreeNode * tree )
           break;
         case TypeK:
 		  if(tree->type == Integer)
-	          fprintf(listing,"Type: Integer\n");
+	          fprintf(listing,"Integer Type\n");
 		  else
-			  fprintf(listing,"Type: Void\n");
+			  fprintf(listing,"Void Type\n");
           break;
         case CallK:
-          fprintf(listing,"Call: \n");
+          fprintf(listing,"Function Call Expression: %s\n",tree->child[0]->attr.name);
+//          fprintf(listing,"Function Call Expression: %s\n",tree->attr.name);
           break;
         default:
           fprintf(listing,"Unknown ExpNode kind\n");
@@ -215,23 +216,23 @@ void printTree( TreeNode * tree )
     else if (tree->nodekind==DecK)
     { switch (tree->kind.dec) {
         case VarK:
-          fprintf(listing,"Variable declaration:\n");
+          fprintf(listing,"Variable declared: %s\n",tree->child[1]->attr.name);
           break;
         case FunK:
-          fprintf(listing,"Function declaration: \n");
+          fprintf(listing,"Function declared: %s\n",tree->child[0]->attr.name);
           break;
       }
     }
     else if (tree->nodekind==ParamK)
     { switch (tree->kind.dec) {
         case NonK:
-          fprintf(listing,"No parameter: %d, %s\n",tree->type,tree->child[0]->attr.name);
+          fprintf(listing,"Void Parameter: %d, %s\n",tree->type,tree->child[0]->attr.name);
           break;
         case SingleK:
-          fprintf(listing,"Single variable parameter: \n");
+          fprintf(listing,"A Variable Parameter: %s\n",tree->attr.name);
           break;
         case ArrK:
-          fprintf(listing,"Array parameter \n");
+          fprintf(listing,"A Variable Parameter: %s\n",tree->attr.name);
           break;
       }
     }
