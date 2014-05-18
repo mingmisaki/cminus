@@ -16,7 +16,7 @@ cminus: $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o cminus -lfl 
 
 y.tab.c: ./yacc/cminus.y
-	$(YACC) -d ./yacc/cminus.y
+	$(YACC) -d -v ./yacc/cminus.y
 
 y.tab.o: y.tab.c ./yacc/globals.h util.h
 	$(CC) -c y.tab.c
@@ -36,7 +36,7 @@ util.o: util.c util.h ./yacc/globals.h
 clean:
 	-rm cminus 
 	-rm $(OBJS)
-	-rm lex.yy.c y.tab.c y.tab.h
+	-rm lex.yy.c y.tab.c y.tab.h y.outout
 
 
 all: cminus 

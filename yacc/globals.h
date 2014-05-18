@@ -45,6 +45,7 @@
 
 /* MAXRESERVED = the number of reserved words */
 #define MAXRESERVED 8
+#define MAXTOKENLEN 40
 
 /* Yacc/Bison generates its own integer values
  * for tokens
@@ -56,14 +57,17 @@ extern FILE* listing; /* listing output text file */
 extern FILE* code; /* code text file for TM simulator */
 
 extern int lineno; /* source line number for listing */
+extern char tokenString[MAXTOKENLEN+1];
 
 /**************************************************/
 /***********   Syntax tree for parsing ************/
 /**************************************************/
 
-typedef enum {StmtK,ExpK} NodeKind;
-typedef enum {IfK,RepeatK,AssignK} StmtKind;
-typedef enum {OpK,ConstK,IdK} ExpKind;
+typedef enum {DecK,StmtK,ExpK,ParamK} NodeKind;
+typedef enum {VarK,FunK} DecKind;
+typedef enum {IfK,IterK,AssignK,CompK,ReturnK} StmtKind;
+typedef enum {OpK,ConstK,IdK,TypeK, CallK} ExpKind;
+typedef enum {NonK,SingleK,ArrK} ParamKind;
 
 /* ExpType is used for type checking */
 //typedef enum {Void,Integer,Boolean} ExpType;
@@ -76,7 +80,7 @@ typedef struct treeNode
      struct treeNode * sibling;
      int lineno;
      NodeKind nodekind;
-     union { StmtKind stmt; ExpKind exp;} kind;
+     union { DecKind dec; StmtKind stmt; ExpKind exp; ParamKind param;} kind;
      union { TokenType op;
              int val;
              char * name; } attr;

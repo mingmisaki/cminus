@@ -1,1 +1,2 @@
-int
+int abc[77];
+void xyz;

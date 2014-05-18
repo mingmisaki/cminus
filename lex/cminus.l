@@ -11,7 +11,7 @@
 //#include "scan.h"
 #include "y.tab.h"
 /* lexeme of identifier or reserved word */
-//char tokenString[MAXTOKENLEN+1];
+char tokenString[MAXTOKENLEN+1];
 %}
 
 letter      [a-zA-Z]
@@ -73,11 +73,12 @@ TokenType getToken(void)
     yyout = listing;
   }
   currentToken = yylex();
-//strncpy(tokenString,yytext,MAXTOKENLEN);
+  strncpy(tokenString,yytext,MAXTOKENLEN);
 //  if (1) {
 //    fprintf(listing,"\t%2d              ",lineno);
 //    printToken(currentToken,tokenString);
 //  }
+  fprintf(listing,"DEBUG getToken %d, %s\n",currentToken,  tokenString);
   return currentToken;
 }
 

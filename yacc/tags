@@ -1,0 +1,66 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AssignK	globals.h	/^typedef enum {IfK,RepeatK,AssignK} StmtKind;$/;"	e	enum:__anon2
+ConstK	globals.h	/^typedef enum {OpK,ConstK,IdK} ExpKind;$/;"	e	enum:__anon3
+ExpK	globals.h	/^typedef enum {StmtK,ExpK} NodeKind;$/;"	e	enum:__anon1
+ExpKind	globals.h	/^typedef enum {OpK,ConstK,IdK} ExpKind;$/;"	t	typeref:enum:__anon3
+ExpType	globals.h	/^typedef enum {Void,Integer} ExpType;$/;"	t	typeref:enum:__anon4
+FALSE	globals.h	39;"	d
+IdK	globals.h	/^typedef enum {OpK,ConstK,IdK} ExpKind;$/;"	e	enum:__anon3
+IfK	globals.h	/^typedef enum {IfK,RepeatK,AssignK} StmtKind;$/;"	e	enum:__anon2
+Integer	globals.h	/^typedef enum {Void,Integer} ExpType;$/;"	e	enum:__anon4
+MAXCHILDREN	globals.h	72;"	d
+MAXRESERVED	globals.h	47;"	d
+NodeKind	globals.h	/^typedef enum {StmtK,ExpK} NodeKind;$/;"	t	typeref:enum:__anon1
+OpK	globals.h	/^typedef enum {OpK,ConstK,IdK} ExpKind;$/;"	e	enum:__anon3
+RepeatK	globals.h	/^typedef enum {IfK,RepeatK,AssignK} StmtKind;$/;"	e	enum:__anon2
+StmtK	globals.h	/^typedef enum {StmtK,ExpK} NodeKind;$/;"	e	enum:__anon1
+StmtKind	globals.h	/^typedef enum {IfK,RepeatK,AssignK} StmtKind;$/;"	t	typeref:enum:__anon2
+TRUE	globals.h	43;"	d
+TokenType	globals.h	/^typedef int TokenType; $/;"	t
+TreeNode	globals.h	/^   } TreeNode;$/;"	t	typeref:struct:treeNode
+Void	globals.h	/^typedef enum {Void,Integer} ExpType;$/;"	e	enum:__anon4
+_GLOBALS_H_	globals.h	11;"	d
+assign_stmt	cminus.y	/^assign_stmt : ID { savedName = copyString(tokenString);$/;"	l
+assign_stmt	tiny.y	/^assign_stmt : ID { savedName = copyString(tokenString);$/;"	l
+attr	globals.h	/^             char * name; } attr;$/;"	m	struct:treeNode	typeref:union:treeNode::__anon6
+child	globals.h	/^   { struct treeNode * child[MAXCHILDREN];$/;"	m	struct:treeNode	typeref:struct:treeNode::treeNode
+exp	cminus.y	/^exp         : simple_exp LT simple_exp $/;"	l
+exp	globals.h	/^     union { StmtKind stmt; ExpKind exp;} kind;$/;"	m	union:treeNode::__anon5
+exp	tiny.y	/^exp         : simple_exp LT simple_exp $/;"	l
+factor	cminus.y	/^factor      : LPAREN exp RPAREN$/;"	l
+factor	tiny.y	/^factor      : LPAREN exp RPAREN$/;"	l
+if_stmt	cminus.y	/^if_stmt     : IF exp THEN stmt_seq END$/;"	l
+if_stmt	tiny.y	/^if_stmt     : IF exp THEN stmt_seq END$/;"	l
+kind	globals.h	/^     union { StmtKind stmt; ExpKind exp;} kind;$/;"	m	struct:treeNode	typeref:union:treeNode::__anon5
+lineno	globals.h	/^     int lineno;$/;"	m	struct:treeNode
+name	globals.h	/^             char * name; } attr;$/;"	m	union:treeNode::__anon6
+nodekind	globals.h	/^     NodeKind nodekind;$/;"	m	struct:treeNode
+op	globals.h	/^     union { TokenType op;$/;"	m	union:treeNode::__anon6
+program	cminus.y	/^program     : stmt_seq$/;"	l
+program	cminus.y	/^program : stmt { printf("ok?\\n"); savedTree = $1; };$/;"	l
+program	tiny.y	/^program     : stmt_seq$/;"	l
+read_stmt	cminus.y	/^read_stmt   : READ ID$/;"	l
+read_stmt	tiny.y	/^read_stmt   : READ ID$/;"	l
+repeat_stmt	cminus.y	/^repeat_stmt : REPEAT stmt_seq UNTIL exp$/;"	l
+repeat_stmt	tiny.y	/^repeat_stmt : REPEAT stmt_seq UNTIL exp$/;"	l
+sibling	globals.h	/^     struct treeNode * sibling;$/;"	m	struct:treeNode	typeref:struct:treeNode::treeNode
+simple_exp	cminus.y	/^simple_exp  : simple_exp PLUS term $/;"	l
+simple_exp	tiny.y	/^simple_exp  : simple_exp PLUS term $/;"	l
+stmt	cminus.y	/^stmt        : if_stmt { $$ = $1; }$/;"	l
+stmt	cminus.y	/^stmt : INT { $$ = newStmtNode(AssignK); };$/;"	l
+stmt	globals.h	/^     union { StmtKind stmt; ExpKind exp;} kind;$/;"	m	union:treeNode::__anon5
+stmt	tiny.y	/^stmt        : if_stmt { $$ = $1; }$/;"	l
+stmt_seq	cminus.y	/^stmt_seq    : stmt_seq SEMI stmt$/;"	l
+stmt_seq	tiny.y	/^stmt_seq    : stmt_seq SEMI stmt$/;"	l
+term	cminus.y	/^term        : term TIMES factor $/;"	l
+term	tiny.y	/^term        : term TIMES factor $/;"	l
+treeNode	globals.h	/^typedef struct treeNode$/;"	s
+type	globals.h	/^     ExpType type; \/* for type checking of exps *\/$/;"	m	struct:treeNode
+val	globals.h	/^             int val;$/;"	m	union:treeNode::__anon6
+write_stmt	cminus.y	/^write_stmt  : WRITE exp$/;"	l
+write_stmt	tiny.y	/^write_stmt  : WRITE exp$/;"	l

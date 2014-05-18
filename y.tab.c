@@ -75,14 +75,17 @@
 
 #define YYSTYPE TreeNode *
 static char * savedName; /* for use in assignments */
+static int savedNum; /* for use in assignments */
 static int savedLineNo;  /* ditto */
 static TreeNode * savedTree; /* stores syntax tree for later return */
 static int yylex(void); // added 11/2/11 to ensure no conflict with lex
+//char tokenString[MAXTOKENLEN+1];
+char tmptokenString[MAXTOKENLEN+1];
 
 
 
 /* Line 268 of yacc.c  */
-#line 86 "y.tab.c"
+#line 89 "y.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -186,7 +189,7 @@ typedef int YYSTYPE;
 
 
 /* Line 343 of yacc.c  */
-#line 190 "y.tab.c"
+#line 193 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -403,18 +406,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  4
+#define YYFINAL  8
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   1
+#define YYLAST   9
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  32
+#define YYNTOKENS  36
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  9
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  3
+#define YYNRULES  12
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  5
+#define YYNSTATES  19
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -430,7 +433,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,    34,    33,     2,    32,     2,    35,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -462,19 +465,24 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5
+       0,     0,     3,     5,     8,    10,    12,    13,    18,    20,
+      21,    27,    29
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      33,     0,    -1,    34,    -1,    29,    -1
+      37,     0,    -1,    38,    -1,    38,    39,    -1,    39,    -1,
+      40,    -1,    -1,    44,     6,    41,    42,    -1,    25,    -1,
+      -1,    21,     7,    43,    22,    25,    -1,    29,    -1,    31,
+      -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    28,    28,    29
+       0,    40,    40,    44,    53,    57,    64,    63,    78,    80,
+      80,    95,    97
 };
 #endif
 
@@ -487,7 +495,9 @@ static const char *const yytname[] =
   "ASSIGN", "EQ", "NEQ", "LT", "LTE", "GT", "GTE", "PLUS", "MINUS",
   "TIMES", "OVER", "LPAREN", "RPAREN", "LBRACK", "RBRACK", "LBRACE",
   "RBRACE", "SEMI", "COMMA", "ENDFILE", "ERROR", "INT", "RETURN", "VOID",
-  "$accept", "program", "stmt", 0
+  "'-'", "'+'", "'*'", "'/'", "$accept", "program", "declaration_list",
+  "declaration", "var_declaration", "$@1", "var_declaration_", "$@2",
+  "type_specifier", 0
 };
 #endif
 
@@ -499,20 +509,22 @@ static const yytype_uint16 yytoknum[] =
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286
+     285,   286,    45,    43,    42,    47
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    32,    33,    34
+       0,    36,    37,    38,    38,    39,    41,    40,    42,    43,
+      42,    44,    44
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     1
+       0,     2,     1,     2,     1,     1,     0,     4,     1,     0,
+       5,     1,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default reduction number in state STATE-NUM.
@@ -520,27 +532,29 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     3,     0,     2,     1
+       0,    11,    12,     0,     2,     4,     5,     0,     1,     3,
+       6,     0,     0,     8,     7,     9,     0,     0,    10
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3
+      -1,     3,     4,     5,     6,    11,    14,    16,     7
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -30
+#define YYPACT_NINF -29
 static const yytype_int8 yypact[] =
 {
-     -29,   -30,     1,   -30,   -30
+     -28,   -29,   -29,     2,   -28,   -29,   -29,    -1,   -29,   -29,
+     -29,   -21,     0,   -29,   -29,   -29,   -16,   -17,   -29
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -30,   -30,   -30
+     -29,   -29,   -29,     5,   -29,   -29,   -29,   -29,   -29
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -549,25 +563,26 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       1,     4
+      12,     1,     8,     2,    13,    10,    17,    15,    18,     9
 };
 
 #define yypact_value_is_default(yystate) \
-  ((yystate) == (-30))
+  ((yystate) == (-29))
 
 #define yytable_value_is_error(yytable_value) \
   YYID (0)
 
 static const yytype_uint8 yycheck[] =
 {
-      29,     0
+      21,    29,     0,    31,    25,     6,    22,     7,    25,     4
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    29,    33,    34,     0
+       0,    29,    31,    37,    38,    39,    40,    44,     0,    39,
+       6,    41,    21,    25,    42,     7,    43,    22,    25
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1404,21 +1419,108 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 28 "./yacc/cminus.y"
-    { printf("ok?\n"); savedTree = (yyvsp[(1) - (1)]); }
+#line 40 "./yacc/cminus.y"
+    { savedTree = (yyvsp[(1) - (1)]); 
+}
     break;
 
   case 3:
 
 /* Line 1806 of yacc.c  */
-#line 29 "./yacc/cminus.y"
-    { (yyval) = newStmtNode(AssignK); }
+#line 45 "./yacc/cminus.y"
+    { YYSTYPE t = (yyvsp[(1) - (2)]);
+						if (t != NULL)
+						{ while (t->sibling != NULL)
+							t = t->sibling;
+							t->sibling = (yyvsp[(2) - (2)]);
+							(yyval) = (yyvsp[(1) - (2)]); }
+						else (yyval) = (yyvsp[(2) - (2)]);
+					}
+    break;
+
+  case 4:
+
+/* Line 1806 of yacc.c  */
+#line 53 "./yacc/cminus.y"
+    { (yyval) = (yyvsp[(1) - (1)]); }
+    break;
+
+  case 5:
+
+/* Line 1806 of yacc.c  */
+#line 57 "./yacc/cminus.y"
+    { (yyval) = (yyvsp[(1) - (1)]); }
+    break;
+
+  case 6:
+
+/* Line 1806 of yacc.c  */
+#line 64 "./yacc/cminus.y"
+    {
+					savedName = copyString(tokenString); 
+					printf("DEBUG var_declaration1 %s\n",savedName);
+				  }
+    break;
+
+  case 7:
+
+/* Line 1806 of yacc.c  */
+#line 68 "./yacc/cminus.y"
+    { 
+						(yyval) = newDecNode(VarK);
+						(yyval)->child[0] = (yyvsp[(1) - (4)]);
+						(yyval)->child[1] = newExpNode(IdK); 
+						(yyval)->child[1]->attr.name = savedName;
+						
+						(yyval)->child[2] = (yyvsp[(4) - (4)]);
+				   
+					}
+    break;
+
+  case 9:
+
+/* Line 1806 of yacc.c  */
+#line 80 "./yacc/cminus.y"
+    {
+					savedNum = atoi(tokenString);
+				   }
+    break;
+
+  case 10:
+
+/* Line 1806 of yacc.c  */
+#line 85 "./yacc/cminus.y"
+    { //$$ = newDecNode(VarK);
+					//$$->type = $1->type;
+					//$$->child[0] = newExpNode(IdK);
+					//$$->child[0]->attr.name = savedName;
+					//$$->child[1] = newExpNode(ConstK);
+					//$$->child[1]->attr.val = savedNum;
+					(yyval) = newExpNode(ConstK);
+					(yyval)->attr.val = savedNum;
+				  }
+    break;
+
+  case 11:
+
+/* Line 1806 of yacc.c  */
+#line 95 "./yacc/cminus.y"
+    { (yyval) = newExpNode(TypeK);
+				 	    (yyval)->type = Integer; }
+    break;
+
+  case 12:
+
+/* Line 1806 of yacc.c  */
+#line 97 "./yacc/cminus.y"
+    { (yyval) = newExpNode(TypeK);
+				 	    (yyval)->type = Void; }
     break;
 
 
 
 /* Line 1806 of yacc.c  */
-#line 1422 "y.tab.c"
+#line 1524 "y.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1649,7 +1751,7 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 32 "./yacc/cminus.y"
+#line 102 "./yacc/cminus.y"
 
 
 int yyerror(char * message)
@@ -1671,214 +1773,310 @@ TreeNode * parse(void)
   return savedTree;
 }
 
-//program : declaration_list SEMI { printf("OK?\n"); };
-///* 2*/
-//declaration_list : declaration_list declaration
-//					| declaration
-//					;
-//					
-///* 3*/
-//declaration : var_declaration
-//					| fun_declaration
-//					;
-//					
-///* 4*/
-//var_declaration : type_specifier ID SEMI
-//					| type_specifier ID LBRACK/*[*/ NUM /*]*/RBRACK SEMI
-//					;
-///* 5*/
-//type_specifier : INT | VOID 
-//				;
+
+//program : stmt { savedTree = $1; };
+///*haha*/
+//stmt : VOID { $$ = newStmtNode(AssignK); };
+
+
 ///* 6*/
 //fun_declaration : type_specifier ID LPAREN params RPAREN compound_stmt
+//				  { $$ = newDecNode(FunK);
+//					$$->type = $1->type;
+//					$$->child[0] = newExpNode(IdK);
+//					$$->child[0]->attr.name = copyString(tokenString);
+//					$$->child[1] = $4;
+//					$$->child[2] = $6;
+//				  }
 //				;
 ///* 7*/
-//params : param_list | VOID 
+//params : param_list { $$ = $1; } 
+//		| VOID { 
+//			$$ = newParamNode(NonK);
+//		  }
 //		;
 ///* 8*/
-//param_list : param_list COMMA param | param
-//			;
+//param_list : param_list COMMA param 
+//		 { YYSTYPE t = $1;
+//		 if (t != NULL)
+//		 { while (t->sibling != NULL)
+//				t = t->sibling;
+//				t->sibling = $3;
+//				$$ = $1; 
+//		 }
+//		 else $$ = $3;
+//	  	 }
+//		 | param { $$ = $1; }
+//		 ;
 ///* 9*/
-//param : type_specifier ID | type_specifier ID LBRACK RBRACK
+//param : type_specifier ID 
+//	    { 
+//		 $$ = newParamNode(SingleK);
+//		 $$->type = $1->type;
+//	     $$->attr.name  = copyString(tokenString);
+//
+//		}
+//	    | type_specifier ID{ savedName = copyString(tokenString); }
+//		  LBRACK RBRACK
+//	    {
+//		 $$ = newParamNode(ArrK);
+//		 $$->type = $1->type;
+//	     $$->attr.name = savedName;
+//		}
+//
 //		;
 ///*10*/
 //compound_stmt : LBRACE local_declarations statement_list RBRACE
+//			    { YYSTYPE t = newStmtNode(CompK);
+//				  t->child[0] = $2;
+//				  t->child[1] = $3;
+//				  $$ = t;
+//				}
+//
 //				;
 ///*11*/
-//local_declarations : local_declarations var_declaration | 
+//local_declarations : local_declarations var_declaration 
+//					{ YYSTYPE t = $1;
+//						if (t != NULL)
+//						{ while (t->sibling != NULL)
+//							t = t->sibling;
+//							t->sibling = $2;
+//							$$ = $1; }
+//						else $$ = $2;
+//					}
+//					|
 //					;
 ///*12*/
-//statement_list : statement_list statement | 
+//statement_list : statement_list statement  
+//					{ YYSTYPE t = $1;
+//						if (t != NULL)
+//						{ while (t->sibling != NULL)
+//							t = t->sibling;
+//							t->sibling = $2;
+//							$$ = $1; }
+//						else $$ = $2;
+//					}
+//			     |
 //				;
 ///*13*/
-//statement : expression_stmt | compound_stmt | selection_stmt
-//				| iteration_stmt | return_stmt
+//statement : expression_stmt { $$ = $1;} |
+//			compound_stmt { $$ = $1;} |
+//		   	selection_stmt { $$ = $1; }	|
+//		   	iteration_stmt { $$ = $1; } |
+//		   	return_stmt { $$ = $1; }
 //			;
 ///*14*/
-//expression_stmt : expression SEMI | SEMI
+//expression_stmt : expression SEMI
+//				  {
+//					  $$ = $1;
+//				  }
+//
+//				  | SEMI
 //					;
 ///*15*/
 //selection_stmt : IF LPAREN expression RPAREN statement
+//					{
+//						$$ = newStmtNode(IfK);
+//						$$->child[0] = $3;
+//						$$->child[1] = $5;
+//					}
+//
 //					| IF LPAREN expression RPAREN statement ELSE statement
+//					{
+//						$$ = newStmtNode(IfK);
+//						$$->child[0] = $3;
+//						$$->child[1] = $5;
+//						$$->child[2] = $7;
+//					}
 //				;
 ///*16*/
 //iteration_stmt : WHILE LPAREN expression RPAREN statement
+//					{
+//						$$ = newStmtNode(IterK);
+//						$$->child[0] = $3;
+//						$$->child[1] = $5;
+//					}
 //				;
 ///*17*/
-//return_stmt : RETURN SEMI | RETURN expression SEMI
+//return_stmt : RETURN SEMI 
+//					{
+//						$$ = newStmtNode(ReturnK);
+//
+//					}
+//			 | RETURN expression SEMI
+//					{
+//						$$ = newStmtNode(ReturnK);
+//						$$->child[0] = $2;
+//
+//					}
 //;
 ///*18*/
-//expression : var ASSIGN expression | simple_expression
+//expression : var ASSIGN expression 
+//				{
+//					$$ = newStmtNode(AssignK);
+//					$$->child[0] = $1;
+//					$$->child[1] = $2;
+//				}
+//			| simple_expression { $$ = $1; }
 //;
 ///*19*/
-//var : ID | ID LBRACK expression RBRACK
+//var : ID 
+//		{
+//			$$ = newExpNode(IdK);
+//			$$->attr.name = copyString(tokenString);	
+//		}
+//			| ID { savedName = copyString(tokenString); }
+//			  LBRACK expression RBRACK
+//		{
+//			$$ = newExpNode(IdK);
+//			$$->attr.name = savedName;
+//			$$->child[0] = $4;
+//		}
 //;
 ///*20*/
-//simple_expression : additive_expression relop additive_expression
-//					| additive_expression
+//simple_expression : additive_expression LTE additive_expression
+//		{
+//			$$ = newExpNode(OpK);
+//			$$->child[0] = $1;
+//		    $$->child[1] = $3;
+//		    $$->attr.val = LTE;	
+//		} |
+//					additive_expression LT additive_expression
+//		{
+//			$$ = newExpNode(OpK);
+//			$$->child[0] = $1;
+//		    $$->child[1] = $3;
+//		    $$->attr.val = LT;	
+//		} |
+//					additive_expression GT additive_expression
+//		{
+//			$$ = newExpNode(OpK);
+//			$$->child[0] = $1;
+//		    $$->child[1] = $3;
+//		    $$->attr.val = GT;	
+//		} |
+//					additive_expression GTE additive_expression
+//		{
+//			$$ = newExpNode(OpK);
+//			$$->child[0] = $1;
+//		    $$->child[1] = $3;
+//		    $$->attr.val = GTE;	
+//		} |
+//					additive_expression EQ additive_expression
+//		{
+//			$$ = newExpNode(OpK);
+//			$$->child[0] = $1;
+//		    $$->child[1] = $3;
+//		    $$->attr.val = EQ;	
+//		} |
+//					additive_expression NEQ additive_expression
+//		{
+//			$$ = newExpNode(OpK);
+//			$$->child[0] = $1;
+//		    $$->child[1] = $3;
+//		    $$->attr.val = NEQ;	
+//		} |
+//
+//					 additive_expression
+//						{
+//							$$ = $1;
+//						}
 //					;
 //
 ///*21*/
-//relop : LTE | LT | GT | GTE | EQ | NEQ
-//		;
+///*relop : LTE */
+//		
 ///*22*/
-//additive_expression : additive_expression addop term | term
+//additive_expression : additive_expression PLUS term 
+//						{
+//							$$ = newExpNode(OpK);
+//							$$->child[0] = $1;
+//						    $$->child[1] = $3;
+//						    $$->attr.val = PLUS;	
+//						} |
+//				   	  additive_expression MINUS term 
+//						{
+//							$$ = newExpNode(OpK);
+//							$$->child[0] = $1;
+//						    $$->child[1] = $3;
+//						    $$->attr.val = MINUS;	
+//						} |
+//					 term 
+//					  	{
+//							$$ = $1;
+//						}
 //;
 ///*23*/
-//addop : PLUS | MINUS
-//;
+///*addop : PLUS | MINUS*/
 ///*24*/
-//term : term mulop factor | factor
+//term : term TIMES factor
+//		{
+//			$$ = newExpNode(OpK);
+//			$$->child[0] = $1;
+//		    $$->child[1] = $3;
+//		    $$->attr.val = TIMES;	
+//		} |
+//	   term OVER factor
+// 		{
+//			$$ = newExpNode(OpK);
+//			$$->child[0] = $1;
+//		    $$->child[1] = $3;
+//		    $$->attr.val = OVER;	
+//			
+//		} |
+//	   factor
+//		{
+//			$$ = $1;
+//		}
+//
 //;
 ///*25*/
-//mulop : TIMES | OVER
-//;
+///* mulop : TIMES | OVER*/
 ///*26*/
-//factor : LPAREN expression RPAREN | var | call | NUM
+//factor : LPAREN expression RPAREN
+//			 {
+//				$$ = $2;
+//			 }	 |
+//		 var 
+//		 	{
+//				$$ = $1;
+//				
+//			}   |
+//		 call 
+//			{
+//				$$ = $1;	
+//			}   |
+//		 NUM
+//			{
+//				$$ = newExpNode(ConstK);
+//				$$->attr.val = atoi(tokenString);
+//		 	}
 //;
 ///*27*/
-//call : ID LPAREN args RPAREN
+//call : ID { savedName = copyString(tokenString); }
+//	   LPAREN args RPAREN 
+//	   {
+//			$$ = newExpNode(CallK);
+//			$$->child[0] = $4;
+//	   }
 //;
 ///*28*/
-//args : arg_list | 
+//args : arg_list { $$ = $1; } |
 //;
 ///*29*/
-//arg_list : arg_list COMMA expression | expression
+//arg_list : arg_list COMMA expression 
+//				{ YYSTYPE t = $1;
+//					if (t != NULL)
+//				{ while (t->sibling != NULL)
+//							t = t->sibling;
+//					t->sibling = $2;
+//						$$ = $1; }
+//						else $$ = $2;
+//				}
+//			
+//		   | expression
+//		   		{
+//					$$ = $1;	
+//				}
 //;
-/* Grammar for TINY */
-/*
-program     : stmt_seq
-                 { savedTree = $1;} 
-            ;
-stmt_seq    : stmt_seq SEMI stmt
-                 { YYSTYPE t = $1;
-                   if (t != NULL)
-                   { while (t->sibling != NULL)
-                        t = t->sibling;
-                     t->sibling = $3;
-                     $$ = $1; }
-                     else $$ = $3;
-                 }
-            | stmt  { $$ = $1; }
-            ;
-stmt        : if_stmt { $$ = $1; }
-            | repeat_stmt { $$ = $1; }
-            | assign_stmt { $$ = $1; }
-            | read_stmt { $$ = $1; }
-            | write_stmt { $$ = $1; }
-            | error  { $$ = NULL; }
-            ;
-if_stmt     : IF exp THEN stmt_seq END
-                 { $$ = newStmtNode(IfK);
-                   $$->child[0] = $2;
-                   $$->child[1] = $4;
-                 }
-            | IF exp THEN stmt_seq ELSE stmt_seq END
-                 { $$ = newStmtNode(IfK);
-                   $$->child[0] = $2;
-                   $$->child[1] = $4;
-                   $$->child[2] = $6;
-                 }
-            ;
-repeat_stmt : REPEAT stmt_seq UNTIL exp
-                 { $$ = newStmtNode(RepeatK);
-                   $$->child[0] = $2;
-                   $$->child[1] = $4;
-                 }
-            ;
-assign_stmt : ID { savedName = copyString(tokenString);
-                   savedLineNo = lineno; }
-              ASSIGN exp
-                 { $$ = newStmtNode(AssignK);
-                   $$->child[0] = $4;
-                   $$->attr.name = savedName;
-                   $$->lineno = savedLineNo;
-                 }
-            ;
-read_stmt   : READ ID
-                 { $$ = newStmtNode(ReadK);
-                   $$->attr.name =
-                     copyString(tokenString);
-                 }
-            ;
-write_stmt  : WRITE exp
-                 { $$ = newStmtNode(WriteK);
-                   $$->child[0] = $2;
-                 }
-            ;
-exp         : simple_exp LT simple_exp 
-                 { $$ = newExpNode(OpK);
-                   $$->child[0] = $1;
-                   $$->child[1] = $3;
-                   $$->attr.op = LT;
-                 }
-            | simple_exp EQ simple_exp
-                 { $$ = newExpNode(OpK);
-                   $$->child[0] = $1;
-                   $$->child[1] = $3;
-                   $$->attr.op = EQ;
-                 }
-            | simple_exp { $$ = $1; }
-            ;
-simple_exp  : simple_exp PLUS term 
-                 { $$ = newExpNode(OpK);
-                   $$->child[0] = $1;
-                   $$->child[1] = $3;
-                   $$->attr.op = PLUS;
-                 }
-            | simple_exp MINUS term
-                 { $$ = newExpNode(OpK);
-                   $$->child[0] = $1;
-                   $$->child[1] = $3;
-                   $$->attr.op = MINUS;
-                 } 
-            | term { $$ = $1; }
-            ;
-term        : term TIMES factor 
-                 { $$ = newExpNode(OpK);
-                   $$->child[0] = $1;
-                   $$->child[1] = $3;
-                   $$->attr.op = TIMES;
-                 }
-            | term OVER factor
-                 { $$ = newExpNode(OpK);
-                   $$->child[0] = $1;
-                   $$->child[1] = $3;
-                   $$->attr.op = OVER;
-                 }
-            | factor { $$ = $1; }
-            ;
-factor      : LPAREN exp RPAREN
-                 { $$ = $2; }
-            | NUM
-                 { $$ = newExpNode(ConstK);
-                   $$->attr.val = atoi(tokenString);
-                 }
-            | ID { $$ = newExpNode(IdK);
-                   $$->attr.name =
-                         copyString(tokenString);
-                 }
-            | error { $$ = NULL; }
-            ;
-*/
 
